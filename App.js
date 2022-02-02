@@ -5,7 +5,7 @@ import {Provider} from 'react-redux';
 // import 'firebase/auth';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
-import reducers from './src/reducers';
+import rootReducer from './src/reducers';
 //import Router from './src/Router';
 import LoginForm from './src/components/LoginFrom';
 import StoreList from './src/components/StoreList';
@@ -17,16 +17,16 @@ const Stack = createNativeStackNavigator();
 class App extends Component {
 
   render() {
-    //const store = createStore( reducers, {}, applyMiddleware(ReduxThunk));
+    const store = createStore( rootReducer, {}, applyMiddleware(ReduxThunk));
     return (
-     // <Provider store={store}>
+      <Provider store={store}>
         <NavigationContainer>
                 <Stack.Navigator>
                     <Stack.Screen name="Login" component={LoginForm}  />
                      <Stack.Screen name="Store" component={StoreList} /> 
                 </Stack.Navigator>
             </NavigationContainer>
-    //  </Provider> 
+      </Provider> 
     );
   }
 }

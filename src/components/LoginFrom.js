@@ -2,19 +2,23 @@ import React, {useState, useEffect} from 'react';
 import {Alert,TextInput, View, Button} from 'react-native';
 import CardSection from './CardSection';
 import Spinner from './Spinner';
+import { connect } from 'react-redux';
 //import StoreList from './StoreList';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { emailChanged, passwordChanged, loginUser } from '../actions/LoginActions';
 
 // kullanicidan gelen login bilgisini redux ile 
 
- const LoginForm =  ({navigation}) => {
+
+ const LoginForm =  (props) => {
         //state = {email: '', password: '', loading: false};
+        const navigation = props.navigation;
         const [email, setMail] = useState("");
         const [password, setPassword] = useState("");
         const [loading, setLoading] = useState(false);
-        
-        useEffect(() => {setMail(""), [] });
+
+        //useEffect(() => {setMail(""), [] });
 
         const clickLogin = () =>
         {
@@ -28,7 +32,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
             }
             else
             {
-                navigation.navigate('Store');
+                loginUser({email, password, navigation});
+                setLoading(false);
+                //props.navigation.navigate('Store');
                 //setMail();
             }
             
@@ -84,5 +90,13 @@ const styles = {
       }
 };
 
-export default LoginForm;
+const mapStateToProps = ( {storeResponse} ) => {
+    const { email, password, loading } = storeResponse;
+    return { // return dediğim anda artık bu değerler props'a dahil oluyor
+        email,
+        password
+    };
+}
+
+export default connect(mapStateToProps, {emailChanged, passwordChanged})(LoginForm);
 
