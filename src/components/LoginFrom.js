@@ -20,30 +20,13 @@ import { emailChanged, passwordChanged, loginUser } from '../actions/LoginAction
 
         //useEffect(() => {setMail(""), [] });
 
-        const clickLogin = () =>
-        {
-            setLoading(true);
-           // console.log(.loading);
-            if(password === '')
-            {
-                Alert.alert('Message', 'Email and Password should not be empty.', 
-                [ {text: 'Okay', onPress: ()=> null} ]);
-                setLoading(false);
-            }
-            else
-            {
-                loginUser({email, password, navigation});
-                setLoading(false);
-                //props.navigation.navigate('Store');
-                //setMail();
-            }
-            
-        }
+       
 
         const renderButton = () =>
         {
             if(!loading){
-            return <Button title={"Login"} onPress={() => clickLogin()}> Login </Button>;
+            //return <Button title={"Login"} onPress={() => clickLogin()}> Login </Button>;
+            return <Button title={"Login"} onPress={() => navigation.navigate('Store')}> Login </Button>;
             }
             return <Spinner size="small" />;
         }
