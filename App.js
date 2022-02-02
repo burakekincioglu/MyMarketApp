@@ -8,6 +8,7 @@ import ReduxThunk from 'redux-thunk';
 import rootReducer from './src/reducers';
 //import Router from './src/Router';
 import LoginForm from './src/components/LoginFrom';
+//import StoreList from './src/components/StoreList';
 import StoreList from './src/components/StoreList';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';

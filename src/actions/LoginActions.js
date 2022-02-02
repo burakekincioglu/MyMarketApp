@@ -34,7 +34,6 @@ const loginSuccess = (navigation) => { // dispatch ile reducer hareket ettiriliy
     console.log('login başarılı');
     dispatch({
         type: LOGIN_USER_SUCCESS,
-
     });
     navigation.navigate('Store');
 };
