@@ -6,21 +6,19 @@ import { connect } from 'react-redux';
 //import StoreList from './StoreList';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { emailChanged, passwordChanged, loginUser } from '../actions/LoginActions';
+import { emailChanged, passwordChanged } from '../actions/LoginActions';
 
 // kullanicidan gelen login bilgisini redux ile 
 
 
- const LoginForm =  (props) => {
+ const LoginForm =  ({ navigation }) => {
         //state = {email: '', password: '', loading: false};
-        const navigation = props.navigation;
+        //const navigation = props.navigation;
         const [email, setMail] = useState("");
         const [password, setPassword] = useState("");
         const [loading, setLoading] = useState(false);
 
         //useEffect(() => {setMail(""), [] });
-
-       
 
         const renderButton = () =>
         {
@@ -80,6 +78,11 @@ const mapStateToProps = ( {loginResponse} ) => {
         password
     };
 }
+
+function mapDispatchToProps (dispatch, ownProps) {
+
+}
+
 
 export default connect(mapStateToProps, {emailChanged, passwordChanged})(LoginForm);
 

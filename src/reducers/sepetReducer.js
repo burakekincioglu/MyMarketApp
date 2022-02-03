@@ -8,7 +8,7 @@ const INITIAL_STATE = {
 export default (state= INITIAL_STATE, action) => {
     switch (action.type) {
         case SEPET_EKLENDI:
-            return { ...state, sepetData: action.sepetData, sepetUrunCount: action.sepetUrunCount + 1};
+            return { ...state, sepetData: [...state.sepetData, action.sepetData], sepetUrunCount: action.sepetUrunCount + 1};
         default:
             return state;
     }

@@ -10,6 +10,7 @@ import rootReducer from './src/reducers';
 import LoginForm from './src/components/LoginFrom';
 //import StoreList from './src/components/StoreList';
 import StoreList from './src/components/StoreList';
+import Sepet from './src/components/Sepet'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -24,7 +25,8 @@ class App extends Component {
         <NavigationContainer>
                 <Stack.Navigator>
                     <Stack.Screen name="Login" component={LoginForm}  />
-                     <Stack.Screen name="Store" component={StoreList} /> 
+                     <Stack.Screen name="Store" component={StoreList} />
+                     <Stack.Screen name="Sepet" component={Sepet} />  
                 </Stack.Navigator>
             </NavigationContainer>
       </Provider> 
