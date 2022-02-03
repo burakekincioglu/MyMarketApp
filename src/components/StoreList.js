@@ -11,9 +11,6 @@ import { useNavigation } from '@react-navigation/native';
 const StoreList = ({ addCart, navigation }) => {
   const [data, setData] = useState([]);
   const [sepetData, setSepetData] = useState([]);
-  const [sepetUrunCount, setUrunCount] = useState();
-  //const navigation = useNavigation();
-  //const navigation = actions.navigation;
 
   useEffect(() => {
     fetch('https://fakestoreapi.com/products?limit=20') // 20 tane örnek ürün geldi
@@ -183,16 +180,16 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = ({ sepetResponse }) => {
-  const { sepetUrunCount } = sepetResponse;
+  const { sepetData } = sepetResponse;
   return { // return dediğim anda artık bu değerler props'a dahil oluyor
-    sepetData : sepetResponse.sepetData,
-    sepetUrunCount
+    //sepetData : sepetResponse.sepetData,
+    sepetData
   };
 }
 
 function mapDispatchToProps(dispatch, ownProps) { // 
   return {
-    addCart: (item) => dispatch(sepeteEklendi(item, ownProps.sepetUrunCount)),
+    addCart: (item) => dispatch(sepeteEklendi(item)),
   };
 }
 
