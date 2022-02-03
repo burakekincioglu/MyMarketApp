@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native';
+import { connect } from 'react-redux';
 import { sepeteEklendi } from '../actions/SepetActions';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -9,7 +10,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const StoreList =  () => {
 	const [data, setData] = useState([]);
-  const navigation = actions.navigation;
+  const [sepetData, setSepetData] = useState([]);
+  const [sepetUrunCount, setUrunCount] = useState();
+  //const navigation = actions.navigation;
     
 	useEffect(() => {
         fetch('https://fakestoreapi.com/products?limit=20') // 20 tane örnek ürün geldi
@@ -17,6 +20,10 @@ const StoreList =  () => {
             .then(json=> setData(json))
 	}, []);
 
+  const sepeteEkle = () => {
+    sepeteEklendi();
+
+  }
 
 	return (
 		<View style={styles.container}>
@@ -52,7 +59,7 @@ const StoreList =  () => {
                 <View style={styles.cardFooter}>
                   <View style={styles.socialBarContainer}>
                     <View style={styles.socialBarSection}>
-                      <TouchableOpacity style={styles.socialBarButton} onPress={() => sepeteEklendi()}>
+                      <TouchableOpacity style={styles.socialBarButton} onPress={() => sepeteEkle()}>
                         <Image style={styles.icon} source={{uri: 'https://img.icons8.com/nolan/96/3498db/add-shopping-cart.png'}}/>
                         <Text style={[styles.socialBarLabel, styles.buyNow]}>Buy Now</Text>
                       </TouchableOpacity>
@@ -173,4 +180,14 @@ const styles = StyleSheet.create({
     }
   });  
 
-  export default StoreList;
+
+
+const mapStateToProps = ( {sepetResponse} ) => {
+  const { sepetData, sepetUrunCount } = sepetResponse;
+  return { // return dediğim anda artık bu değerler props'a dahil oluyor
+    sepetData,
+    sepetUrunCount 
+  };
+}
+
+export default connect(mapStateToProps, {sepeteEklendi})(StoreList);

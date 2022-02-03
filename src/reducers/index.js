@@ -1,7 +1,9 @@
 import { combineReducers } from "redux";
+import { sepeteEklendi } from "../actions";
 import loginReducer from "./loginReducer";
+import sepetReducer from "./sepetReducer";
 
 export default combineReducers({
-    storeResponse: loginReducer
-   // authResponse: authReducers,
+    loginResponse: loginReducer,
+    sepetResponse: sepetReducer
 });

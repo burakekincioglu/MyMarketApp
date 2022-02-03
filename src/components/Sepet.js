@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
+import { Button } from './Button';
 import { connect } from 'react-redux';
 
 
@@ -56,6 +57,7 @@ const Sepet =  () => {
             )
           }}
         />
+        <Button title={"SatinAl"} onPress={() => navigation.navigate('SatinAl')}> Satın Al </Button>
       </View>
     )
  
