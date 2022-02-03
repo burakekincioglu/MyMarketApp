@@ -5,103 +5,104 @@ import { connect } from 'react-redux';
 import { sepeteEklendi } from '../actions/SepetActions';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
 
+  const StoreList = () => {
+    const [data, setData] = useState([]);
+    const [sepetData, setSepetData] = useState([]);
+    const [sepetUrunCount, setUrunCount] = useState();
+    const navigation = useNavigation();
+    //const navigation = actions.navigation;
 
-const StoreList =  () => {
-	const [data, setData] = useState([]);
-  const [sepetData, setSepetData] = useState([]);
-  const [sepetUrunCount, setUrunCount] = useState();
-  //const navigation = actions.navigation;
-    
-	useEffect(() => {
-        fetch('https://fakestoreapi.com/products?limit=20') // 20 tane örnek ürün geldi
-            .then(res=>res.json())
-            .then(json=> setData(json))
-	}, []);
+    useEffect(() => {
+      fetch('https://fakestoreapi.com/products?limit=20') // 20 tane örnek ürün geldi
+        .then(res => res.json())
+        .then(json => setData(json))
+    }, []);
 
-  const sepeteEkle = () => {
-    sepeteEklendi();
+    const sepeteEkle = () => {
+      sepeteEklendi();
 
-  }
+    }
 
-	return (
-		<View style={styles.container}>
+    return (
+      <View style={styles.container}>
 
         <FlatList style={styles.list}
           contentContainerStyle={styles.listContainer}
-          
-          data= {data} // set edilen datayı alıyor
+
+          data={data} // set edilen datayı alıyor
           horizontal={false}
           numColumns={2}
-          keyExtractor= {(item) => {
+          keyExtractor={(item) => {
             return item.id;
           }}
           ItemSeparatorComponent={() => {
             return (
-              <View style={styles.separator}/>
+              <View style={styles.separator} />
             )
           }}
           renderItem={(post) => {
             const item = post.item;
             return (
               <View style={styles.card}>
-               
-               <View style={styles.cardHeader}>
+
+                <View style={styles.cardHeader}>
                   <View>
                     <Text style={styles.title}>{item.title}</Text>
                     <Text style={styles.price}>{item.price}</Text>
                   </View>
                 </View>
 
-                <Image style={styles.cardImage} source={{uri:item.image}}/>
-                
+                <Image style={styles.cardImage} source={{ uri: item.image }} />
+
                 <View style={styles.cardFooter}>
                   <View style={styles.socialBarContainer}>
                     <View style={styles.socialBarSection}>
                       <TouchableOpacity style={styles.socialBarButton} onPress={() => sepeteEkle()}>
-                        <Image style={styles.icon} source={{uri: 'https://img.icons8.com/nolan/96/3498db/add-shopping-cart.png'}}/>
+                        <Image style={styles.icon} source={{ uri: 'https://img.icons8.com/nolan/96/3498db/add-shopping-cart.png' }} />
                         <Text style={[styles.socialBarLabel, styles.buyNow]}>Buy Now</Text>
                       </TouchableOpacity>
                     </View>
                     <View style={styles.socialBarSection}>
                       <TouchableOpacity style={styles.socialBarButton}>
-                        <Image style={styles.icon} source={{uri: 'https://img.icons8.com/color/50/000000/hearts.png'}}/>
+                        <Image style={styles.icon} source={{ uri: 'https://img.icons8.com/color/50/000000/hearts.png' }} />
                         <Text style={styles.socialBarLabel}>25</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
                 </View>
-                
+
               </View>
-              
+
             )
           }}
         />
         <Button title={"Sepet"} onPress={() => navigation.navigate('Sepet')}> Sepete Git </Button>
       </View>
-	);
-};
+    );
+  };
 
 
 
-const styles = StyleSheet.create({
-    container:{
-      flex:1,
-      marginTop:20,
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      marginTop: 20,
     },
     list: {
       paddingHorizontal: 5,
-      backgroundColor:"#E6E6E6",
+      backgroundColor: "#E6E6E6",
     },
-    listContainer:{
-      alignItems:'center'
+    listContainer: {
+      alignItems: 'center'
     },
     separator: {
       marginTop: 10,
     },
     /******** card **************/
-    card:{
+    card: {
       shadowColor: '#00000021',
       shadowOffset: {
         width: 2
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
       shadowOpacity: 0.5,
       shadowRadius: 4,
       marginVertical: 8,
-      backgroundColor:"white",
+      backgroundColor: "white",
       flexBasis: '47%',
       marginHorizontal: 5,
     },
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
       paddingVertical: 12.5,
       paddingHorizontal: 16,
     },
-    cardFooter:{
+    cardFooter: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       paddingTop: 12.5,
@@ -134,27 +135,27 @@ const styles = StyleSheet.create({
       borderBottomLeftRadius: 1,
       borderBottomRightRadius: 1,
     },
-    cardImage:{
+    cardImage: {
       flex: 1,
       height: 150,
       width: null,
     },
     /******** card components **************/
-    title:{
-      fontSize:18,
-      flex:1,
+    title: {
+      fontSize: 18,
+      flex: 1,
     },
-    price:{
-      fontSize:16,
+    price: {
+      fontSize: 16,
       color: "green",
       marginTop: 5
     },
-    buyNow:{
+    buyNow: {
       color: "purple",
     },
     icon: {
-      width:25,
-      height:25,
+      width: 25,
+      height: 25,
     },
     /******** social bar ******************/
     socialBarContainer: {
@@ -173,21 +174,21 @@ const styles = StyleSheet.create({
       alignSelf: 'flex-end',
       justifyContent: 'center',
     },
-    socialBarButton:{
+    socialBarButton: {
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
     }
-  });  
+  });
 
 
 
-const mapStateToProps = ( {sepetResponse} ) => {
-  const { sepetData, sepetUrunCount } = sepetResponse;
-  return { // return dediğim anda artık bu değerler props'a dahil oluyor
-    sepetData,
-    sepetUrunCount 
-  };
-}
+  const mapStateToProps = ({ sepetResponse }) => {
+    const { sepetData, sepetUrunCount } = sepetResponse;
+    return { // return dediğim anda artık bu değerler props'a dahil oluyor
+      sepetData,
+      sepetUrunCount
+    };
+  }
 
-export default connect(mapStateToProps, {sepeteEklendi})(StoreList);
+  export default connect(mapStateToProps, { sepeteEklendi })(StoreList);
