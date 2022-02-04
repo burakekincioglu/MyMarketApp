@@ -1,10 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
-import { Button } from './Button';
+import { StyleSheet, View, Text, FlatList, Image, Button } from 'react-native';
+import CardSection from './CardSection';
+//import { Button } from './Button';
 import { connect } from 'react-redux';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
+const Sepet = ({ sepetData, navigation }) => {
 
-const Sepet = ({ sepetData }) => {
+  //////////////////////////////////////
+  const [toplam, setToplam] = useState("");
+  var toplama = 0;
+
+  useEffect(() => {
+    for (var i = 0; i < sepetData.length; i++) {
+      toplama += sepetData[i].price;
+    }
+    setToplam(toplama);
+  });
+  ///////////////////////////////////////
 
   return (
     <View style={styles.container}>
@@ -38,32 +53,41 @@ const Sepet = ({ sepetData }) => {
               <Image style={styles.cardImage} source={{ uri: item.image }} />
 
               <View style={styles.cardFooter}>
-                <View style={styles.socialBarContainer}>
-                  <View style={styles.socialBarSection}>
-                    <TouchableOpacity style={styles.socialBarButton} onPress={() => addProductToCart()}>
-                      <Image style={styles.icon} source={{ uri: 'https://img.icons8.com/nolan/96/3498db/add-shopping-cart.png' }} />
-                      <Text style={[styles.socialBarLabel, styles.buyNow]}>Buy Now</Text>
-                    </TouchableOpacity>
-                  </View>
-                  <View style={styles.socialBarSection}>
-                    <TouchableOpacity style={styles.socialBarButton}>
-                      <Image style={styles.icon} source={{ uri: 'https://img.icons8.com/color/50/000000/hearts.png' }} />
-                      <Text style={styles.socialBarLabel}>25</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
+
               </View>
             </View>
+
           )
         }}
       />
+      <CardSection>
+        <View style={styles.buttonView}>
+          <Text>
+            Toplam Fiyat: {toplam}
+          </Text>
+        </View>
+      </CardSection>
+      <CardSection>
+        <View style={styles.buttonView} >
+          <Button title={"Satın Al"} onPress={() => navigation.navigate('SatinAl')} />
+        </View>
+      </CardSection>
+
     </View>
-  )
+  );
 
 }
 
 
 const styles = StyleSheet.create({
+  buttonView: {
+    justifyContent: 'center',
+    textAlign: 'center',
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    padding: 5,
+    flexDirection: 'row'
+  },
   container: {
     flex: 1,
     marginTop: 20,
@@ -73,7 +97,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#E6E6E6",
   },
   listContainer: {
-    alignItems: 'center'
+    alignItems: 'center',
+
   },
   separator: {
     marginTop: 10,
@@ -90,6 +115,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     flexBasis: '47%',
     marginHorizontal: 5,
+    width: 300
   },
   cardHeader: {
     paddingVertical: 17,
@@ -123,9 +149,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   price: {
-    fontSize: 16,
+    fontSize: 22,
     color: "green",
-    marginTop: 5
+    marginTop: 5,
+    fontWeight: 'bold'
   },
   buyNow: {
     color: "purple",
@@ -160,10 +187,11 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = ({ sepetResponse }) => {
-  const { sepetUrunCount } = sepetResponse;
+  //const { sepetUrunCount } = sepetResponse;
   return { // return dediğim anda artık bu değerler props'a dahil oluyor
     sepetData: sepetResponse.sepetData,
-    sepetUrunCount
+    toplam: sepetResponse.toplam
+    // sepetUrunCount
   };
 }
 

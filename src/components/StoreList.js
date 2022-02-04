@@ -11,6 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 const StoreList = ({ addCart, navigation }) => {
   const [data, setData] = useState([]);
   const [sepetData, setSepetData] = useState([]);
+  const [sayi, setSayi] = useState(0);
 
   useEffect(() => {
     fetch('https://fakestoreapi.com/products?limit=20') // 20 tane örnek ürün geldi
@@ -19,6 +20,7 @@ const StoreList = ({ addCart, navigation }) => {
   }, []);
 
   const sepeteEkle = (item) => {
+    setSayi(sayi + 1); 
     addCart(item);
   }
 
@@ -75,7 +77,14 @@ const StoreList = ({ addCart, navigation }) => {
           )
         }}
       />
-      <Button title={"Sepet"} onPress={() => navigation.navigate('Sepet')} />
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('Sepet')}
+      >
+        <Text>Sepete Git </Text>
+        <View style={{ backgroundColor: 'red', borderRadius: 50, padding: 5 }}><Text style={{ color: 'white', fontWeight: 'bold' }}>{sayi}</Text></View>
+      </TouchableOpacity>
+      {/* <Button title={"Sepete Git"} onPress={() => navigation.navigate('Sepet')} /> */}
     </View>
   );
 };
@@ -83,6 +92,14 @@ const StoreList = ({ addCart, navigation }) => {
 
 
 const styles = StyleSheet.create({
+  button: {
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    textAlign: 'center'
+  },
   container: {
     flex: 1,
     marginTop: 20,
@@ -187,7 +204,7 @@ const mapStateToProps = ({ sepetResponse }) => {
   };
 }
 
-function mapDispatchToProps(dispatch, ownProps) { // 
+function mapDispatchToProps(dispatch) { // 
   return {
     addCart: (item) => dispatch(sepeteEklendi(item)),
   };

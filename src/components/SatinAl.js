@@ -1,37 +1,48 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
-import { Button } from './Button';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button} from 'react-native';
+import CardSection from './CardSection';
+//import Button from './Button';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
 
-const SatinAl =  () => {
+const SatinAl = ({ navigation }) => {
+    const [kartno, setKart] = useState("");
 
-    return( 
-        <View style={{flex:1,backgroundColor: 'white'}}>
-            <CardSection>
-                <TextInput 
-                placeholder='Email'
-                style={styles.inputStyle}
-                value={email}
-                onChangeText={email => setMail(email)} // ikinci kullanımı {text => this.setState({email: text})}
-                /> 
+    return (
+        <View style={{ flex: 1, backgroundColor: 'white' }}>
+
+            <CardSection >
+                <Text> Kart Bilgisi Giriniz </Text>
             </CardSection>
 
             <CardSection>
                 <TextInput
-                secureTextEntry 
-                placeholder='Password'
-                style={styles.inputStyle}
-                value={password}
-                onChangeText={password => setPassword(password)} // ikinci kullanımı {text => this.setState({email: text})}
-                /> 
+                    placeholder='Kart Numarası'
+                    style={styles.inputStyle}
+                    value={kartno}
+                    onChangeText={kartNo => setKart(kartNo)}
+                />
             </CardSection>
 
             <CardSection>
-                <Button title={"SatinAlmaIslemi"} onPress={() => navigation.navigate('IslemGerceklesti')}> Satın Al </Button>
+
+                <Button title={"Satın Al"} onPress={() => navigation.navigate('IslemOkay')} />
+
             </CardSection>
-            </View>
+        </View>
     )
 }
+
+const styles = {
+
+    inputStyle: {
+        paddingRight: 5,
+        paddingLeft: 5,
+        fontSize: 18,
+        flex: 1
+    }
+};
 
 export default SatinAl;

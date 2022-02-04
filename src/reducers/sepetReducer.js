@@ -1,7 +1,8 @@
 import { SEPET_EKLENDI } from "../actions/types";
 
 const INITIAL_STATE = {
-    sepetData: [] 
+    sepetData: [],
+    toplam: 0 
 };
 
 export default (state= INITIAL_STATE, action) => {
