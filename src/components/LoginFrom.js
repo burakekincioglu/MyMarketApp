@@ -20,11 +20,20 @@ import { emailChanged, passwordChanged } from '../actions/LoginActions';
 
         //useEffect(() => {setMail(""), [] });
 
-        const renderButton = () =>
+        const renderLoginButton = () =>
         {
             if(!loading){
             //return <Button title={"Login"} onPress={() => clickLogin()}> Login </Button>;
             return <Button title={"Login"} onPress={() => navigation.navigate('Store')}> Login </Button>;
+            }
+            return <Spinner size="small" />;
+        }
+
+        const renderNewUserButton = () =>
+        {
+            if(!loading){
+            //return <Button title={"Login"} onPress={() => clickLogin()}> Login </Button>;
+            return <Button title={"New User"} onPress={() => navigation.navigate('Register')}> Register </Button>;
             }
             return <Spinner size="small" />;
         }
@@ -52,7 +61,10 @@ import { emailChanged, passwordChanged } from '../actions/LoginActions';
             </CardSection>
 
             <CardSection>
-                {renderButton()}
+                {renderLoginButton()}
+            </CardSection>
+            <CardSection>
+                {renderNewUserButton()}
             </CardSection>
             </View>
             

@@ -1,31 +1,61 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
+import { Picker } from "@react-native-picker/picker";
 import { Button } from 'react-native';
 import { connect } from 'react-redux';
 import { sepeteEklendi } from '../actions/SepetActions';
+import { pickerSelected } from '../actions/PickerActions';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
+import CardSection from './CardSection';
 
 
 const StoreList = ({ addCart, navigation }) => {
   const [data, setData] = useState([]);
   const [sepetData, setSepetData] = useState([]);
   const [sayi, setSayi] = useState(0);
+  //const [filtreTuru, setFiltre] = useState("");
+  //const [filtredData, setFiltredData] = useState("");
 
   useEffect(() => {
     fetch('https://fakestoreapi.com/products?limit=20') // 20 tane örnek ürün geldi
       .then(res => res.json())
       .then(json => setData(json))
   }, []);
+  
 
   const sepeteEkle = (item) => {
     setSayi(sayi + 1); 
     addCart(item);
   }
 
+  const artanListele = () => {
+    let numbersCopy = [...data];
+    numbersCopy.sort((a, b) => a.price - b.price);
+    setData(numbersCopy);
+  }
+
+  const updateListData = (fiyatFiltreTuru) => {
+    switch (fiyatFiltreTuru) {
+      case "artan":
+        artanListele();
+        break;
+      default:
+        break;
+    }
+  }
+
   return (
     <View style={styles.container}>
+
+        <View>
+        <Picker  selectedValue={"free"} onValueChange= {fiyatFiltreTuru => updateListData(fiyatFiltreTuru)}>
+            <Picker.Item label="Ürünleri Sırala" value="Unknown" /> 
+            <Picker.Item label="Fiyata Göre Artan" value="artan" />                        
+        </Picker>
+        </View>
+      
 
       <FlatList style={styles.list}
         contentContainerStyle={styles.listContainer}
@@ -49,7 +79,7 @@ const StoreList = ({ addCart, navigation }) => {
               <View style={styles.cardHeader}>
                 <View>
                   <Text style={styles.title}>{item.title}</Text>
-                  <Text style={styles.price}>{item.price}</Text>
+                  <Text style={styles.price}>{item.price} TL</Text>
                 </View>
               </View>
 
@@ -197,11 +227,13 @@ const styles = StyleSheet.create({
 
 
 
-const mapStateToProps = ({ sepetResponse }) => {
+const mapStateToProps = ({ sepetResponse, pickerResponse }) => {
   const { sepetData } = sepetResponse;
+  const { filtreTuru } = pickerResponse;
   return { // return dediğim anda artık bu değerler props'a dahil oluyor
     //sepetData : sepetResponse.sepetData,
-    sepetData
+    sepetData,
+    filtreTuru
   };
 }
 
