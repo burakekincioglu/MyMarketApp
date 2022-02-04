@@ -13,8 +13,10 @@ import StoreList from './src/components/StoreList';
 import Sepet from './src/components/Sepet';
 import SatinAl from './src/components/SatinAl';
 import  IslemOkay  from './src/components/IslemGerceklesti';
+import Register from './src/components/Register';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +33,7 @@ class App extends Component {
             <Stack.Screen name="Sepet" component={Sepet} />
             <Stack.Screen name="SatinAl" component={SatinAl} />
             <Stack.Screen name="IslemOkay" component={IslemOkay} />
+            <Stack.Screen name="Register" component={Register} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

@@ -8,6 +8,7 @@ import {StoreList} from './components/StoreList';
 import {Sepet} from './components/Sepet';
 import {SatinAl} from './components/SatinAl';
 import {IslemOkay} from './components/IslemGerceklesti';
+import {Register} from './components/Register';
 
 
 const Stack = createNativeStackNavigator();
@@ -23,6 +24,7 @@ const RouterComponent = () => {
                  <Stack.Screen name="Sepet" component={Sepet} />
                  <Stack.Screen name="SatinAl" component={SatinAl} /> 
                  <Stack.Screen name="IslemOkay" component={IslemOkay} />
+                 <Stack.Screen name="Register" component={Register} />
                 </Stack.Navigator>
             </NavigationContainer>
         </Router>
