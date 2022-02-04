@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import CardSection from './CardSection';
 
 
-const SatinAl =  () => {
+const IslemOkay =  () => {
 
     return( 
         <View style={{flex:1,backgroundColor: 'white'}}>
@@ -21,4 +21,4 @@ const SatinAl =  () => {
     )
 }
 
-export default SatinAl;
+export default IslemOkay;
