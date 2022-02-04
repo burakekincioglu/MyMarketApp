@@ -60,13 +60,13 @@ const StoreList = ({ addCart, navigation }) => {
                   <View style={styles.socialBarSection}>
                     <TouchableOpacity style={styles.socialBarButton} onPress={() => sepeteEkle(item)}>
                       <Image style={styles.icon} source={{ uri: 'https://img.icons8.com/nolan/96/3498db/add-shopping-cart.png' }} />
-                      <Text style={[styles.socialBarLabel, styles.buyNow]}>Buy Now</Text>
+                      <Text style={[styles.socialBarLabel, styles.buyNow]}>Sepete Ekle</Text>
                     </TouchableOpacity>
                   </View>
                   <View style={styles.socialBarSection}>
                     <TouchableOpacity style={styles.socialBarButton}>
                       <Image style={styles.icon} source={{ uri: 'https://img.icons8.com/color/50/000000/hearts.png' }} />
-                      <Text style={styles.socialBarLabel}>25</Text>
+                      <Text style={styles.socialBarLabel}>{Math.floor((Math.random() * 100) + 1)}</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -165,6 +165,7 @@ const styles = StyleSheet.create({
   },
   buyNow: {
     color: "purple",
+    marginLeft: 5
   },
   icon: {
     width: 25,
