@@ -46,7 +46,7 @@ const Sepet = ({ sepetData, navigation }) => {
               <View style={styles.cardHeader}>
                 <View>
                   <Text style={styles.title}>{item.title}</Text>
-                  <Text style={styles.price}>{item.price}</Text>
+                  <Text style={styles.price}>{item.price} TL</Text>
                 </View>
               </View>
 
@@ -62,8 +62,8 @@ const Sepet = ({ sepetData, navigation }) => {
       />
       <CardSection>
         <View style={styles.buttonView}>
-          <Text>
-            Toplam Fiyat: {toplam}
+          <Text style={{fontWeight: 'bold'}}>
+            Toplam Fiyat: {toplam} TL
           </Text>
         </View>
       </CardSection>
