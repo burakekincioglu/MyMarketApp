@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
-import { SearchBar } from 'react-native-elements';
+import { SearchBar } from "react-native-elements";
 import { Picker } from "@react-native-picker/picker";
 import { Button } from 'react-native';
 import { connect } from 'react-redux';
@@ -14,18 +14,38 @@ import CardSection from './CardSection';
 
 const StoreList = ({ addCart, navigation }) => {
   const [data, setData] = useState([]);
-  const [sepetData, setSepetData] = useState([]);
+  //const [sepetData, setSepetData] = useState([]);
   const [sayi, setSayi] = useState(0);
-  const [search, setSearch] = useState("");
-  //const [filtreTuru, setFiltre] = useState("");
-  //const [filtredData, setFiltredData] = useState("");
+  const [searchText, setSearch] = useState("");
+  const [filtredData, setFiltredData] = useState([]);
 
   useEffect(() => {
-    fetch('https://fakestoreapi.com/products?limit=30') // 20 tane örnek ürün geldi  
+    fetch('https://fakestoreapi.com/products?limit=2') // 20 tane örnek ürün geldi  
       .then(res => res.json())
       .then(json => setData(json))
+      setSearch("");
+      setFiltredData([]);
   }, []);
 
+  const searchProduct = (searchtext) => {
+    console.log(searchtext);
+    setFiltredData([]);
+    setSearch(searchtext);
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].title.includes(searchtext))
+      {
+        filtredData.push(data[i]);
+      }
+    }
+    setFiltredData(filtredData);
+    
+    // let filtredDatasource = data.filter( (searchtext)  => {
+    //   return data.title.includes(searchtext);
+    // });
+  
+    // setFiltredData(filtredDatasource);
+
+  }
 
   const sepeteEkle = (item) => {
     setSayi(sayi + 1);
@@ -51,17 +71,15 @@ const StoreList = ({ addCart, navigation }) => {
   return (
     <View style={styles.container}>
 
-      <View>
-        <SearchBar
-          round={true}
-          lightTheme={true}
-          placeholder="Search..."
-          autoCapitalize='none'
-          autoCorrect={false}
-          onChangeText={() => searchItem()}
-          value={search}
-        />
-      </View>
+      <SearchBar
+        round={true}
+        lightTheme={true}
+        placeholder="Search..."
+        autoCapitalize='none'
+        autoCorrect={false}
+        onChangeText={searchText => searchProduct(searchText)}
+        value={searchText}
+      />
 
       <View>
         <Picker selectedValue={"free"} onValueChange={fiyatFiltreTuru => updateListData(fiyatFiltreTuru)}>
@@ -74,7 +92,7 @@ const StoreList = ({ addCart, navigation }) => {
       <FlatList style={styles.list}
         contentContainerStyle={styles.listContainer}
 
-        data={data} // set edilen datayı alıyor
+        data={filtredData && filtredData.length > 0 ? filtredData : data} // set edilen datayı alıyor
         horizontal={false}
         numColumns={2}
         keyExtractor={(item) => {
