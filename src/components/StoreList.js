@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
+import { SearchBar } from 'react-native-elements';
 import { Picker } from "@react-native-picker/picker";
 import { Button } from 'react-native';
 import { connect } from 'react-redux';
@@ -15,18 +16,19 @@ const StoreList = ({ addCart, navigation }) => {
   const [data, setData] = useState([]);
   const [sepetData, setSepetData] = useState([]);
   const [sayi, setSayi] = useState(0);
+  const [search, setSearch] = useState("");
   //const [filtreTuru, setFiltre] = useState("");
   //const [filtredData, setFiltredData] = useState("");
 
   useEffect(() => {
-    fetch('https://fakestoreapi.com/products/category/jewelery') // 20 tane örnek ürün geldi  https://fakestoreapi.com/products?limit=30
+    fetch('https://fakestoreapi.com/products?limit=30') // 20 tane örnek ürün geldi  
       .then(res => res.json())
       .then(json => setData(json))
   }, []);
-  
+
 
   const sepeteEkle = (item) => {
-    setSayi(sayi + 1); 
+    setSayi(sayi + 1);
     addCart(item);
   }
 
@@ -49,13 +51,25 @@ const StoreList = ({ addCart, navigation }) => {
   return (
     <View style={styles.container}>
 
-        <View>
-        <Picker  selectedValue={"free"} onValueChange= {fiyatFiltreTuru => updateListData(fiyatFiltreTuru)}>
-            <Picker.Item label="Ürünleri Sırala" value="Unknown" /> 
-            <Picker.Item label="Fiyata Göre Artan" value="artan" />                        
+      <View>
+        <SearchBar
+          round={true}
+          lightTheme={true}
+          placeholder="Search..."
+          autoCapitalize='none'
+          autoCorrect={false}
+          onChangeText={() => searchItem()}
+          value={search}
+        />
+      </View>
+
+      <View>
+        <Picker selectedValue={"free"} onValueChange={fiyatFiltreTuru => updateListData(fiyatFiltreTuru)}>
+          <Picker.Item label="Ürünleri Sırala" value="Unknown" />
+          <Picker.Item label="Fiyata Göre Artan" value="artan" />
         </Picker>
-        </View>
-      
+      </View>
+
 
       <FlatList style={styles.list}
         contentContainerStyle={styles.listContainer}
