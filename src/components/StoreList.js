@@ -19,7 +19,7 @@ const StoreList = ({ addCart, navigation }) => {
   //const [filtredData, setFiltredData] = useState("");
 
   useEffect(() => {
-    fetch('https://fakestoreapi.com/products?limit=20') // 20 tane örnek ürün geldi
+    fetch('https://fakestoreapi.com/products/category/jewelery') // 20 tane örnek ürün geldi  https://fakestoreapi.com/products?limit=30
       .then(res => res.json())
       .then(json => setData(json))
   }, []);
