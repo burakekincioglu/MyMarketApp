@@ -20,7 +20,7 @@ const StoreList = ({ addCart, navigation }) => {
   const [filtredData, setFiltredData] = useState([]);
 
   useEffect(() => {
-    fetch('https://fakestoreapi.com/products?limit=2') // 20 tane örnek ürün geldi  
+    fetch('https://fakestoreapi.com/products?limit=20') // 20 tane örnek ürün geldi  
       .then(res => res.json())
       .then(json => setData(json))
       setSearch("");
@@ -38,12 +38,6 @@ const StoreList = ({ addCart, navigation }) => {
       }
     }
     setFiltredData(filtredData);
-    
-    // let filtredDatasource = data.filter( (searchtext)  => {
-    //   return data.title.includes(searchtext);
-    // });
-  
-    // setFiltredData(filtredDatasource);
 
   }
 
