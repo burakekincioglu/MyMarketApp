@@ -23,8 +23,8 @@ const StoreList = ({ addCart, navigation }) => {
     fetch('https://fakestoreapi.com/products?limit=20') // 20 tane örnek ürün geldi  
       .then(res => res.json())
       .then(json => setData(json))
-      setSearch("");
-      setFiltredData([]);
+    setSearch("");
+    setFiltredData([]);
   }, []);
 
   const searchProduct = (searchtext) => {
@@ -32,8 +32,7 @@ const StoreList = ({ addCart, navigation }) => {
     setFiltredData([]);
     setSearch(searchtext);
     for (var i = 0; i < data.length; i++) {
-      if (data[i].title.includes(searchtext))
-      {
+      if (data[i].title.includes(searchtext)) {
         filtredData.push(data[i]);
       }
     }
