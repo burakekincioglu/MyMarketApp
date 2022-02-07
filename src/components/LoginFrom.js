@@ -3,7 +3,6 @@ import { Alert, TextInput, View, Button } from 'react-native';
 import CardSection from './CardSection';
 import Spinner from './Spinner';
 import { connect } from 'react-redux';
-//import StoreList from './StoreList';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { emailChanged, passwordChanged } from '../actions/LoginActions';
