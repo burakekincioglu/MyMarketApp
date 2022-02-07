@@ -14,7 +14,7 @@ import CardSection from './CardSection';
 
 const StoreList = ({ addCart, navigation }) => {
   const [data, setData] = useState([]);
-  //const [sepetData, setSepetData] = useState([]);
+  const [copyData, setCopyData] = useState([]);
   const [sayi, setSayi] = useState(0);
   const [searchText, setSearch] = useState("");
   const [filtredData, setFiltredData] = useState([]);
@@ -22,23 +22,41 @@ const StoreList = ({ addCart, navigation }) => {
   useEffect(() => {
     fetch('https://fakestoreapi.com/products?limit=20') // 20 tane örnek ürün geldi  
       .then(res => res.json())
-      .then(json => setData(json))
+      .then((json) => {
+                        setData(json);
+                        setCopyData(json);
+                      })
     setSearch("");
     setFiltredData([]);
+    
   }, []);
 
   const searchProduct = (searchtext) => {
+    setData(copyData);
     console.log(searchtext);
     setFiltredData([]);
-    setSearch(searchtext);
+    //setSearch(searchtext);
     for (var i = 0; i < data.length; i++) {
       if (data[i].title.includes(searchtext)) {
         filtredData.push(data[i]);
       }
     }
-    setFiltredData(filtredData);
+    //filtredData && filtredData.length > 0 ? filtredData : data;
+    if(filtredData && filtredData.length > 0)
+    {
+      setData(filtredData);
+    }
+    else{
+      setData(copyData);
+    }
+    //setFiltredData(filtredData);
+    console.log(data);
 
   }
+
+  // const showProducts = () => {
+  //   return filtredData && filtredData.length > 0 ? filtredData : data;
+  // }
 
   const sepeteEkle = (item) => {
     setSayi(sayi + 1);
@@ -64,15 +82,18 @@ const StoreList = ({ addCart, navigation }) => {
   return (
     <View style={styles.container}>
 
+      <View style={styles.searchView}>
       <SearchBar
         round={true}
         lightTheme={true}
         placeholder="Search..."
         autoCapitalize='none'
         autoCorrect={false}
-        onChangeText={searchText => searchProduct(searchText)}
+        onChangeText={searchText => setSearch(searchText)}
         value={searchText}
       />
+      <Button title={"Ara"} onPress={() => searchProduct(searchText)} />
+      </View>
 
       <View>
         <Picker selectedValue={"free"} onValueChange={fiyatFiltreTuru => updateListData(fiyatFiltreTuru)}>
@@ -85,7 +106,7 @@ const StoreList = ({ addCart, navigation }) => {
       <FlatList style={styles.list}
         contentContainerStyle={styles.listContainer}
 
-        data={filtredData && filtredData.length > 0 ? filtredData : data} // set edilen datayı alıyor
+        data={data} // set edilen datayı alıyor
         horizontal={false}
         numColumns={2}
         keyExtractor={(item) => {
@@ -97,23 +118,23 @@ const StoreList = ({ addCart, navigation }) => {
           )
         }}
         renderItem={(post) => {
-          const item = post.item; // gelen data ile doldurulan item kendisi
+          const singleProduct = post.item; // gelen data ile doldurulan item kendisi
           return (
             <View style={styles.card}>
 
               <View style={styles.cardHeader}>
                 <View>
-                  <Text style={styles.title}>{item.title}</Text>
-                  <Text style={styles.price}>{item.price} TL</Text>
+                  <Text style={styles.title}>{singleProduct.title}</Text>
+                  <Text style={styles.price}>{singleProduct.price} TL</Text>
                 </View>
               </View>
 
-              <Image style={styles.cardImage} source={{ uri: item.image }} />
+              <Image style={styles.cardImage} source={{ uri: singleProduct.image }} />
 
               <View style={styles.cardFooter}>
                 <View style={styles.socialBarContainer}>
                   <View style={styles.socialBarSection}>
-                    <TouchableOpacity style={styles.socialBarButton} onPress={() => sepeteEkle(item)}>
+                    <TouchableOpacity style={styles.socialBarButton} onPress={() => sepeteEkle(singleProduct)}>
                       <Image style={styles.icon} source={{ uri: 'https://img.icons8.com/nolan/96/3498db/add-shopping-cart.png' }} />
                       <Text style={[styles.socialBarLabel, styles.buyNow]}>Sepete Ekle</Text>
                     </TouchableOpacity>
@@ -147,6 +168,9 @@ const StoreList = ({ addCart, navigation }) => {
 
 
 const styles = StyleSheet.create({
+  searchView: {
+    
+  },
   button: {
     alignItems: "center",
     backgroundColor: "#DDDDDD",
