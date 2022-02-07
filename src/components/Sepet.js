@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, FlatList, Image, Button } from 'react-native';
 import CardSection from './CardSection';
-//import { Button } from './Button';
 import { connect } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -11,6 +10,7 @@ const Sepet = ({ sepetData, navigation }) => {
 
   //////////////////////////////////////
   const [toplam, setToplam] = useState("");
+  const [sepetSatisaHazirData, setSepetSatisData] = useState([]);
   var toplama = 0;
 
   useEffect(() => {
@@ -18,8 +18,17 @@ const Sepet = ({ sepetData, navigation }) => {
       toplama += sepetData[i].price;
     }
     setToplam(toplama);
+    shapeSepetData(sepetData);
   });
   ///////////////////////////////////////
+
+  const shapeSepetData = (sepetData) => {
+      for (let i = 0; i < sepetData.length; i++) {
+        
+        
+      }
+  }
+
 
   return (
     <View style={styles.container}>

@@ -7,7 +7,7 @@ import {LoginForm} from './components/LoginFrom';
 import {StoreList} from './components/StoreList';
 import {Sepet} from './components/Sepet';
 import {SatinAl} from './components/SatinAl';
-import {IslemOkay} from './components/IslemGerceklesti';
+import {IslemOkay} from './components/IslemOkay';
 import {Register} from './components/Register';
 
 

@@ -10,6 +10,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import CardSection from './CardSection';
+import { ForceTouchGestureHandler } from 'react-native-gesture-handler';
 
 
 const StoreList = ({ addCart, navigation }) => {
@@ -27,7 +28,8 @@ const StoreList = ({ addCart, navigation }) => {
                         setCopyData(json);
                       })
     setSearch("");
-    setFiltredData([]);
+    let emptyList = [];
+    setFiltredData(emptyList);
     
   }, []);
 
@@ -37,12 +39,12 @@ const StoreList = ({ addCart, navigation }) => {
     setFiltredData([]);
     //setSearch(searchtext);
     for (var i = 0; i < data.length; i++) {
-      if (data[i].title.includes(searchtext)) {
+      if (data[i].title.includes(searchtext) && searchtext !== "" ) {
         filtredData.push(data[i]);
       }
     }
     //filtredData && filtredData.length > 0 ? filtredData : data;
-    if(filtredData && filtredData.length > 0)
+    if(filtredData.length > 0)
     {
       setData(filtredData);
     }
