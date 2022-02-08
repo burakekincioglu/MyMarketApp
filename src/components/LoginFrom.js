@@ -99,6 +99,9 @@ const styles = {
         paddingLeft: 5,
         fontSize: 18,
         flex: 1
+    },
+    cardsection: {
+        
     }
 };
 

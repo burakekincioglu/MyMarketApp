@@ -11,6 +11,7 @@ const Sepet = ({ sepetData, navigation }) => {
   //////////////////////////////////////
   const [toplam, setToplam] = useState("");
   const [sepetSatisaHazirData, setSepetSatisData] = useState([]);
+  const [productDict, setProductDict] = useState({});
   var toplama = 0;
 
   useEffect(() => {
@@ -23,11 +24,29 @@ const Sepet = ({ sepetData, navigation }) => {
   ///////////////////////////////////////
 
   const shapeSepetData = (sepetData) => {
-      for (let i = 0; i < sepetData.length; i++) {
-        
-        
-      }
+    let productArray = [];
+    let sepetDataDict = {};
+    for (let i = 0; i < sepetData.length; i++) {
+      productArray.push(sepetData[i].id);
+    }
+
+    productArray =  productArray.reduce((acc, curr) => {
+      return acc[curr] ? ++acc[curr] : acc[curr] = 1, acc
+    }, {});
+
+    setProductDict(productArray);
+    
+    console.log(productDict);
+
+    var uniqsepetData = sepetData.reduce((a,b) => {
+      if (a.indexOf(b) < 0 ) a.push(b);
+      return a;
+    },[]);
+
+    setSepetSatisData(uniqsepetData);
   }
+
+
 
 
   return (
@@ -36,7 +55,7 @@ const Sepet = ({ sepetData, navigation }) => {
       <FlatList style={styles.list}
         contentContainerStyle={styles.listContainer}
 
-        data={sepetData} // set edilen datayı alıyor
+        data={sepetSatisaHazirData} // set edilen datayı alıyor
         horizontal={false}
         numColumns={1}
         keyExtractor={(item) => {
@@ -55,7 +74,7 @@ const Sepet = ({ sepetData, navigation }) => {
               <View style={styles.cardHeader}>
                 <View>
                   <Text style={styles.title}>{item.title}</Text>
-                  <Text style={styles.price}>{item.price} TL</Text>
+                  <Text style={styles.price}>{productDict[item.id]} x {item.price} TL</Text>
                 </View>
               </View>
 
@@ -71,8 +90,8 @@ const Sepet = ({ sepetData, navigation }) => {
       />
       <CardSection>
         <View style={styles.buttonView}>
-          <Text style={{fontWeight: 'bold'}}>
-            Toplam Fiyat: {toplam} TL
+          <Text style={{ fontWeight: 'bold' }}>
+            Toplam Fiyat: {parseFloat(toplam).toFixed(2)} TL
           </Text>
         </View>
       </CardSection>
