@@ -25,12 +25,11 @@ const Sepet = ({ sepetData, navigation }) => {
 
   const shapeSepetData = (sepetData) => {
     let productArray = [];
-    let sepetDataDict = {};
-    for (let i = 0; i < sepetData.length; i++) {
+    for (let i = 0; i < sepetData.length; i++) { // Sepetdata id'ler listeye aktarılıyor
       productArray.push(sepetData[i].id);
     }
 
-    productArray =  productArray.reduce((acc, curr) => {
+    productArray =  productArray.reduce((acc, curr) => { // İd listesinde hangi üründen kaç tane olduğu dict'e atılıyor
       return acc[curr] ? ++acc[curr] : acc[curr] = 1, acc
     }, {});
 
@@ -38,7 +37,7 @@ const Sepet = ({ sepetData, navigation }) => {
     
     console.log(productDict);
 
-    var uniqsepetData = sepetData.reduce((a,b) => {
+    var uniqsepetData = sepetData.reduce((a,b) => { // Sepet data uniqe değerler haline getiriliyor
       if (a.indexOf(b) < 0 ) a.push(b);
       return a;
     },[]);
