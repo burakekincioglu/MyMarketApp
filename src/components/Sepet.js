@@ -10,20 +10,35 @@ const Sepet = ({ sepetData, navigation }) => {
 
   //////////////////////////////////////
   const [toplam, setToplam] = useState("");
+  const [yeniToplam, setYeniToplam] =useState("");
   const [sepetSatisaHazirData, setSepetSatisData] = useState([]);
   const [productDict, setProductDict] = useState({});
-  var toplama = 0;
+  var toplamFiyat = 0;
+  
 
   useEffect(() => {
+    
+
     for (var i = 0; i < sepetData.length; i++) {
-      toplama += sepetData[i].price;
+      toplamFiyat += sepetData[i].price;
     }
-    setToplam(toplama);
+    setYeniToplam(toplamFiyat);
     shapeSepetData(sepetData);
-  });
+
+  },[]);
   ///////////////////////////////////////
 
+  const uniquq = (sepetData) => {
+    var uniqsepetData = sepetData.reduce((a,b) => { // Sepet data uniqe değerler haline getiriliyor
+      if (a.indexOf(b) < 0 ) a.push(b);
+      return a;
+    },[]);
+    return uniqsepetData;
+  }
+
   const shapeSepetData = (sepetData) => {
+   
+
     let productArray = [];
     for (let i = 0; i < sepetData.length; i++) { // Sepetdata id'ler listeye aktarılıyor
       productArray.push(sepetData[i].id);
@@ -35,13 +50,9 @@ const Sepet = ({ sepetData, navigation }) => {
 
     setProductDict(productArray);
     
-    console.log(productDict);
+    console.log(productDict + "product dict");
 
-    var uniqsepetData = sepetData.reduce((a,b) => { // Sepet data uniqe değerler haline getiriliyor
-      if (a.indexOf(b) < 0 ) a.push(b);
-      return a;
-    },[]);
-
+    let uniqsepetData = uniquq(sepetData);
     setSepetSatisData(uniqsepetData);
   }
 
@@ -90,7 +101,7 @@ const Sepet = ({ sepetData, navigation }) => {
       <CardSection>
         <View style={styles.buttonView}>
           <Text style={{ fontWeight: 'bold' }}>
-            Toplam Fiyat: {parseFloat(toplam).toFixed(2)} TL
+            Toplam Fiyat: {parseFloat(yeniToplam).toFixed(2)} TL
           </Text>
         </View>
       </CardSection>
@@ -98,6 +109,7 @@ const Sepet = ({ sepetData, navigation }) => {
         <View style={styles.buttonView} >
           <Button title={"Satın Al"} onPress={() => navigation.navigate('SatinAl')} />
         </View>
+       
       </CardSection>
 
     </View>
