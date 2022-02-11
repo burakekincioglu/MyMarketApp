@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, FlatList, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { SearchBar } from "react-native-elements";
 import { Picker } from "@react-native-picker/picker";
 import { Button } from 'react-native';
@@ -26,6 +26,7 @@ const StoreList = ({ addCart, navigation }) => {
       .then((json) => {
                         setData(json);
                         setCopyData(json);
+                        console.log(json);
                       })
     setSearch("");
     let emptyList = [];
@@ -81,6 +82,21 @@ const StoreList = ({ addCart, navigation }) => {
     }
   }
 
+  renderFooter = () => {
+   // if (!this.state.loading) return null
+  
+    return (
+      <View
+        style={{
+          paddingVertical: 20,
+          borderTopWidth: 1,
+          borderColor: '#CED0CE'
+        }}>
+        <ActivityIndicator animating size='large' />
+      </View>
+    )
+  }
+
   return (
     <View style={styles.container}>
 
@@ -114,6 +130,7 @@ const StoreList = ({ addCart, navigation }) => {
         keyExtractor={(item) => {
           return item.id;
         }}
+        ListFooterComponent={renderFooter()}
         ItemSeparatorComponent={() => {
           return (
             <View style={styles.separator} />
