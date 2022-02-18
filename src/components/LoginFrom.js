@@ -109,7 +109,8 @@ const mapStateToProps = ({ loginResponse }) => {
     const { email, password, loading } = loginResponse;
     return { // return dediğim anda artık bu değerler props'a dahil oluyor
         email,
-        password
+        password,
+        loading
     };
 }
 
