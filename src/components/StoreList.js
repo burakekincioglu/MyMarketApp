@@ -19,18 +19,21 @@ const StoreList = ({ addCart, navigation }) => {
   const [sayi, setSayi] = useState(0);
   const [searchText, setSearch] = useState("");
   const [filtredData, setFiltredData] = useState([]);
+  //const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    //setLoading(true);
     fetch('https://fakestoreapi.com/products?limit=20') // 20 tane örnek ürün geldi  
       .then(res => res.json())
       .then((json) => {
                         setData(json);
                         setCopyData(json);
-                        console.log(json);
                       })
+    //setLoading(false);
     setSearch("");
     let emptyList = [];
     setFiltredData(emptyList);
+    
     
   }, []);
 
@@ -83,7 +86,7 @@ const StoreList = ({ addCart, navigation }) => {
   }
 
   renderFooter = () => {
-   // if (!this.state.loading) return null
+    //if (!loading) return null
   
     return (
       <View
